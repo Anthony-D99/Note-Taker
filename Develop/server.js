@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const { stringify } = require('querystring');
 
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -24,7 +24,6 @@ app.get('/notes', (req, res) =>
 app.get('/api/notes', (req, res) => {
   const data = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"))
   res.status(200).json(data);
-  console.info(`${req.method} request received to get notes`);
 
 });
 
@@ -32,7 +31,6 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
   res.json(`${req.method} request received to add a note`);
 
-  console.info(`${req.method} request received to add a note`);
 
   const { title, text } = req.body;
   if (title && text) {
